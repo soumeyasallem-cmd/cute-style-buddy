@@ -21,7 +21,7 @@ import {
   Utensils,
   X,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import mascot from "../assets/glowup-mascot.png";
 import workoutMascot from "../assets/glowup-workout.png";
 
@@ -113,7 +113,7 @@ function GlowUpApp() {
       <div className="mobile-shell">
         <header className="app-header">
           <div>
-            <p className="eyebrow">مساء الورد يا جميلة ✨</p>
+            <p className="eyebrow">مساء الورد يا جميلة 🧸✨</p>
             <h1>GlowUp <span>غلو أب</span></h1>
           </div>
           <div className="header-actions">
@@ -197,8 +197,8 @@ function FoodScreen({ calories, setCalories, showToast }: { calories: number; se
     const kcal = foodDatabase[name.toLowerCase()] ?? 320;
     setMeals([...meals, { name, kcal }]); setCalories(Math.min(3000, calories + kcal)); setQuery(""); showToast(`أضفنا ${kcal} سعرة لوجبتك 💕`);
   };
-  return <div className="page"><PageTitle title="أكلي اليوم" subtitle="غذّي جسمك بحب" emoji="🍓" />
-    <section className="food-progress"><div className="small-ring" style={{ "--progress": `${Math.min(360, calories / 5)}deg` } as React.CSSProperties}><span>{calories}</span><small>kcal</small></div><div><small>هدفك اليومي</small><h2>1800 سعرة</h2><p>باقي {Math.max(0, 1800 - calories)} سعرة لليوم</p></div></section>
+  return <div className="page"><PageTitle title="أكلي اليوم" subtitle="غذّي جسمك بحب" emoji="🍓✨" />
+    <section className="food-progress"><div className="small-ring animated-ring" style={{ "--progress": `${Math.min(360, calories / 5)}deg` } as React.CSSProperties}><span>{calories}</span><small>kcal</small><i>♡</i></div><div><small>هدفك اليومي</small><h2>1800 سعرة</h2><p>باقي {Math.max(0, 1800 - calories)} سعرة لليوم</p></div></section>
     <section className="input-card"><label>ماذا أكلتِ؟</label><div className="search-row"><Search size={18} /><input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addFood()} placeholder="مثلاً: رز بالدجاج" /><button onClick={addFood}><Plus size={18} /></button></div><div className="camera-row"><button onClick={() => fileRef.current?.click()}><Camera size={20} /> صوّري وجبتك</button><span>سنقدّر السعرات تلقائياً</span></div><input ref={fileRef} hidden type="file" accept="image/*" capture="environment" onChange={() => { setMeals([...meals, { name: "وجبة مصوّرة", kcal: 380 }]); setCalories(calories + 380); showToast("حلّلنا الصورة: حوالي 380 سعرة ✨"); }} /></section>
     <div className="section-heading"><h2>وجبات اليوم</h2><span>{meals.length} وجبات</span></div>
     <div className="meal-list">{meals.map((meal, i) => <div className="meal" key={`${meal.name}-${i}`}><span>{i === 0 ? "🥣" : i === 1 ? "🍛" : "🍽️"}</span><div><strong>{meal.name}</strong><small>{i === 0 ? "09:15" : "اليوم"}</small></div><b>{meal.kcal} kcal</b></div>)}</div>
@@ -238,10 +238,14 @@ function ClosetScreen({ closet, setCloset, favorites, setFavorites, showToast }:
     });
     setOutfits(generated);
   };
-  return <div className="page"><PageTitle title="دولابي اللطيف" subtitle="كل قطعك الجميلة في مكان واحد" emoji="👗" />
+  return <div className="page closet-page"><PageTitle title="دولابي اللطيف" subtitle="كل قطعك الجميلة في مكان واحد" emoji="🧸✨" />
     <section className="closet-upload"><div><ImagePlus size={28} /><h2>أضيفي قطعة جديدة</h2><p>التقطي صورة بخلفية بسيطة</p></div><div className="category-row">{["بلوزات", "بناطيل", "حجابات", "حقائب", "أحذية"].map((cat) => <button className={category === cat ? "active" : ""} key={cat} onClick={() => setCategory(cat)}>{cat}</button>)}</div><button className="outline-button" onClick={() => fileRef.current?.click()}><Camera size={19} /> تصوير أو اختيار صورة</button><input ref={fileRef} hidden type="file" accept="image/*" capture="environment" onChange={(e) => addImage(e.target.files?.[0])} /></section>
     <div className="section-heading"><h2>قطع دولابي</h2><span>{closet.length} قطعة</span></div>
-    {closet.length ? <div className="closet-grid">{closet.map((item) => <div className="closet-item" key={item.id}><img src={item.src} alt={item.category} /><span>{item.category}</span><button aria-label="حذف القطعة" onClick={() => setCloset(closet.filter((x) => x.id !== item.id))}><X size={14} /></button></div>)}</div> : <div className="empty-closet"><Shirt /><p>دولابك ينتظر قطعك الحلوة</p></div>}
+    <div className="wardrobe-frame">
+      <div className="wardrobe-top"><span>🎀</span><strong>خزانتي</strong><span>✨</span></div>
+      {closet.length ? <div className="closet-shelves">{[0, 1].map((shelf) => <div className="closet-shelf" key={shelf}><div className="closet-grid">{closet.filter((_, index) => index % 2 === shelf).map((item) => <div className="closet-item" key={item.id}><span className="hanger">♡</span><img src={item.src} alt={item.category} /><span>{item.category}</span><button aria-label="حذف القطعة" onClick={() => setCloset(closet.filter((x) => x.id !== item.id))}><X size={14} /></button></div>)}</div></div>)}</div> : <div className="empty-closet"><div className="hanger-rail"><span>👚</span><span>👗</span><span>🧥</span></div><Shirt /><p>دولابك ينتظر قطعك الحلوة</p><small>أضيفي أول قطعة وعلّقيها هنا ✨</small></div>}
+      <div className="wardrobe-drawers"><span>♡</span><span>♡</span></div>
+    </div>
     <button className="mix-button" onClick={mix}><Sparkles /> نسّقي لي لبس اليوم</button>
     {outfits.length > 0 && <><div className="section-heading"><h2>اقتراحات لكِ</h2><IconButton label="اقتراحات جديدة" onClick={mix}><RotateCcw size={17} /></IconButton></div><div className="outfit-scroll">{outfits.map((outfit) => <article className="outfit-card" key={outfit.id}><div>{outfit.items.map((item) => <img key={item.id} src={item.src} alt={item.category} />)}</div><strong>{outfit.title}</strong><button aria-label="حفظ الإطلالة" onClick={() => { setFavorites([...favorites, outfit]); showToast("حفظنا الإطلالة في المفضلة 💕"); }}><Heart size={18} fill={favorites.some((x) => x.title === outfit.title) ? "currentColor" : "none"} /></button></article>)}</div></>}
     {favorites.length > 0 && <p className="favorites-note"><Heart size={15} fill="currentColor" /> لديكِ {favorites.length} إطلالات محفوظة</p>}
