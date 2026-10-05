@@ -22,7 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import mascot from "../assets/glowup-mascot.png";
+import mascot from "../assets/glowup-mascot-wordmark.png";
 import workoutMascot from "../assets/glowup-workout.png";
 
 export const Route = createFileRoute("/")({
@@ -118,7 +118,7 @@ function GlowUpApp() {
           </div>
           <div className="header-actions">
             <IconButton label="الإشعارات" onClick={() => setToast("تذكيرك اللطيف مضبوط على 8:00 صباحاً 💗")}><Bell size={19} /></IconButton>
-            <div className="mini-avatar"><img src={mascot} alt="شخصية غلو أب" width={816} height={816} /></div>
+            <div className="mini-avatar"><img src={mascot} alt="شعار Glow up مطرّز باللون الوردي" width={1024} height={1024} /></div>
           </div>
         </header>
 
@@ -149,7 +149,7 @@ function Onboarding({ onStart }: { onStart: () => void }) {
     <main className="onboarding" dir="rtl">
       <div className="sparkle s1">✦</div><div className="sparkle s2">✿</div><div className="sparkle s3">♡</div>
       <div className="brand-pill">GlowUp · غلو أب</div>
-      <div className="mascot-wrap"><img src={mascot} alt="فتاة غلو أب تحمل نجمة" width={816} height={816} /></div>
+      <div className="mascot-wrap"><img src={mascot} alt="شعار Glow up مطرّز باللون الوردي" width={1024} height={1024} /></div>
       <section className="onboarding-copy">
         <p className="speech">أهلاً يا جميلة! 💕</p>
         <h1>ما هو هدفك اليوم؟</h1>
