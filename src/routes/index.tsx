@@ -24,6 +24,12 @@ import {
 import { useEffect, useRef, useState } from "react";
 import mascot from "../assets/glowup-mascot-wordmark.png";
 import workoutMascot from "../assets/glowup-workout.png";
+import bowSticker from "../assets/bow.png.asset.json";
+import cupcakeSticker from "../assets/cupcake.png.asset.json";
+import headphonesSticker from "../assets/headphones.png.asset.json";
+import strawberrySticker from "../assets/strawberry.png.asset.json";
+import teddySticker from "../assets/teddy.png.asset.json";
+import tulipsSticker from "../assets/tulips.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -88,6 +94,16 @@ function IconButton({ label, children, onClick }: { label: string; children: Rea
   return <button type="button" aria-label={label} title={label} onClick={onClick} className="icon-button">{children}</button>;
 }
 
+function StickerBackdrop() {
+  return <div className="sticker-backdrop" aria-hidden="true">
+    <img className="sticker sticker-bow" src={bowSticker.url} alt="" />
+    <img className="sticker sticker-teddy" src={teddySticker.url} alt="" />
+    <img className="sticker sticker-tulips" src={tulipsSticker.url} alt="" />
+    <img className="sticker sticker-cupcake" src={cupcakeSticker.url} alt="" />
+    <span className="sticker-star star-one">✦</span><span className="sticker-star star-two">✧</span>
+  </div>;
+}
+
 function GlowUpApp() {
   const [onboarded, setOnboarded] = useStoredState("glowup-onboarded", false);
   const [tab, setTab] = useState<Tab>("home");
@@ -110,6 +126,7 @@ function GlowUpApp() {
   const completed = Object.values(routine).filter(Boolean).length;
   return (
     <main className="app-stage" dir="rtl">
+      <StickerBackdrop />
       <div className="mobile-shell">
         <header className="app-header">
           <div>
@@ -169,10 +186,12 @@ function HomeScreen({ calories, completed, streak, stars, setTab }: { calories: 
   const pct = Math.min(100, Math.round((calories / 1800) * 100));
   return <div className="page home-page">
     <section className="motivation-card">
+      <img className="card-sticker motivation-sticker" src={strawberrySticker.url} alt="فراولة وردية" />
       <div><span className="tiny-label">رسالة اليوم</span><h2>أنتِ قادرة على صنع يوم جميل</h2><p>خطواتك الصغيرة تصنع فرقاً كبيراً يا ملكة!</p></div>
       <div className="streak"><Flame size={18} /><strong>{streak}</strong><span>أيام</span></div>
     </section>
     <section className="progress-layout">
+      <img className="card-sticker progress-sticker" src={bowSticker.url} alt="فيونكة وردية" />
       <button className="calorie-ring" style={{ "--progress": `${pct * 3.6}deg` } as React.CSSProperties} onClick={() => setTab("food")}>
         <div><span>{calories}</span><small>من 1800</small><em>kcal</em></div>
       </button>
@@ -180,9 +199,9 @@ function HomeScreen({ calories, completed, streak, stars, setTab }: { calories: 
     </section>
     <div className="section-heading"><div><span>خطتك اليومية</span><h2>كمّلي تألقك ✨</h2></div><span className="stars"><Star size={15} fill="currentColor" /> {stars}</span></div>
     <section className="quick-grid">
-      <button onClick={() => setTab("routine")} className="quick-card pink"><span className="quick-icon">🫧</span><div><small>روتيني</small><strong>{completed}/4 مهام</strong><i><b style={{ width: `${completed * 25}%` }} /></i></div><ChevronLeft size={18} /></button>
-      <button onClick={() => setTab("closet")} className="quick-card cream"><span className="quick-icon">👗</span><div><small>إطلالة اليوم</small><strong>خلّينا ننسق!</strong><p>3 اقتراحات لطيفة</p></div><ChevronLeft size={18} /></button>
-      <button onClick={() => setTab("workout")} className="quick-card mint"><span className="quick-icon">🧘🏻‍♀️</span><div><small>حركتك</small><strong>ابدئي نشاطك</strong><p>حتى 10 دقائق تحسب</p></div><ChevronLeft size={18} /></button>
+      <button onClick={() => setTab("routine")} className="quick-card pink"><span className="quick-icon"><img src={tulipsSticker.url} alt="زهور توليب وردية" /></span><div><small>روتيني</small><strong>{completed}/4 مهام</strong><i><b style={{ width: `${completed * 25}%` }} /></i></div><ChevronLeft size={18} /></button>
+      <button onClick={() => setTab("closet")} className="quick-card cream"><span className="quick-icon"><img src={bowSticker.url} alt="فيونكة وردية" /></span><div><small>إطلالة اليوم</small><strong>خلّينا ننسق!</strong><p>3 اقتراحات لطيفة</p></div><ChevronLeft size={18} /></button>
+      <button onClick={() => setTab("workout")} className="quick-card mint"><span className="quick-icon"><img src={headphonesSticker.url} alt="سماعات وردية" /></span><div><small>حركتك</small><strong>ابدئي نشاطك</strong><p>حتى 10 دقائق تحسب</p></div><ChevronLeft size={18} /></button>
     </section>
   </div>;
 }
