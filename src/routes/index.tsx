@@ -155,7 +155,7 @@ function GlowUpApp() {
           <NavButton active={tab === "routine"} label="روتيني" icon={<Check />} onClick={() => setTab("routine")} />
           <NavButton active={tab === "workout"} label="رياضتي" icon={<Dumbbell />} onClick={() => setTab("workout")} />
           </nav>
-          <img className="made-by made-by-app" src={siaCredit} alt="من إبداع Soumeya Sallem" 
+          <img className="made-by made-by-app" src={siaCredit} alt="من إبداع Soumeya Sallem" loading="lazy" /> 
           {toast && <div className="toast-message">{toast}</div>}
       </div>
     </main>
@@ -180,7 +180,7 @@ function Onboarding({ onStart }: { onStart: () => void }) {
         </div>
         <button className="primary-button" onClick={onStart}>يلا نبدأ <Sparkles size={18} /></button>
       </section>
-      <img className="made-by" src={siaCredit} alt="من إبداع Soumeya Sallem" 
+      <img className="made-by" src={siaCredit} alt="من إبداع Soumeya Sallem" loading="lazy" /> 
     </main>
   );
 }
