@@ -220,7 +220,7 @@ function FoodScreen({ calories, setCalories, showToast }: { calories: number; se
     const reader = new FileReader();
     reader.onload = () => {
       const photo = typeof reader.result === "string" ? reader.result : undefined;
-      setMeals([...meals, { name: "وجبة مصوّرة", kcal: 380, photo }]);
+      setMeals([...meals, { name: "وجبة مصوّرة", kcal: 380, ...(photo ? { photo } : {}) }]);
       setCalories(calories + 380);
       showToast("حفظنا وجبتك بالصورة: حوالي 380 kcal ✨");
     };
