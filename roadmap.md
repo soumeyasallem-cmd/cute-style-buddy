@@ -9,3 +9,4 @@
 - [x] Verify mobile layout and interactions
 - [x] Refresh the app with an extra-cute pink style, rounded controls, wardrobe shelves, and animated calorie rings
 - [x] Integrate the uploaded pink stickers inside cards and around the app frame
+- Enlarge the Soumeya Sallem credit and pin it at the bottom
