@@ -216,7 +216,7 @@ function RoutineScreen({ routine, setRoutine, stars, setStars, showToast }: { ro
 
 function WorkoutScreen({ showToast }: { showToast: (s: string) => void }) {
   const [selected, setSelected] = useState("walk"); const [minutes, setMinutes] = useState(20); const [total, setTotal] = useStoredState("glowup-burned", 145);
-  const workout = workouts.find((item) => item.id === selected) ?? workouts[0]; const burned = minutes * workout.rate;
+  const workout = workouts.find((item) => item.id === selected); const burned = minutes * (workout?.rate ?? 4);
   return <div className="page"><PageTitle title="حركتي اليوم" subtitle="تحركي بالطريقة التي تسعدك" emoji="🎀" />
     <section className="workout-hero"><div><span>حرقتِ اليوم</span><strong>{total}</strong><small>سعرة حرارية</small></div><img src={workoutMascot} alt="شخصية غلو أب تتمرن" width={816} height={816} loading="lazy" /></section>
     <h2 className="standalone-title">اختاري نشاطك</h2><div className="workout-grid">{workouts.map(({ id, label, icon: Icon, tint }) => <button key={id} onClick={() => setSelected(id)} className={selected === id ? `workout-type selected ${tint}` : `workout-type ${tint}`}><Icon /><span>{label}</span>{selected === id && <Check size={14} />}</button>)}</div>
@@ -227,7 +227,17 @@ function WorkoutScreen({ showToast }: { showToast: (s: string) => void }) {
 function ClosetScreen({ closet, setCloset, favorites, setFavorites, showToast }: { closet: ClosetItem[]; setCloset: (v: ClosetItem[]) => void; favorites: Outfit[]; setFavorites: (v: Outfit[]) => void; showToast: (s: string) => void }) {
   const [category, setCategory] = useState("بلوزات"); const [outfits, setOutfits] = useState<Outfit[]>([]); const fileRef = useRef<HTMLInputElement>(null);
   const addImage = (file?: File) => { if (!file) return; const reader = new FileReader(); reader.onload = () => { if (typeof reader.result === "string") { setCloset([...closet, { id: Date.now(), src: reader.result, category }]); showToast("أضفنا القطعة لدولابك 🎀"); } }; reader.readAsDataURL(file); };
-  const mix = () => { if (closet.length < 2) return showToast("أضيفي قطعتين على الأقل لننسق لكِ 💗"); const shuffled = [...closet].sort(() => Math.random() - .5); setOutfits([0, 1, 2].map((n) => ({ id: Date.now() + n, items: [shuffled[n % shuffled.length], shuffled[(n + 1) % shuffled.length]], title: `إطلالة ${["ناعمة", "كاجوال", "مميزة"][n]}` }))); };
+  const mix = () => {
+    if (closet.length < 2) return showToast("أضيفي قطعتين على الأقل لننسق لكِ 💗");
+    const shuffled = [...closet].sort(() => Math.random() - .5);
+    const generated = [0, 1, 2].flatMap((n) => {
+      const first = shuffled[n % shuffled.length];
+      const second = shuffled[(n + 1) % shuffled.length];
+      if (!first || !second) return [];
+      return [{ id: Date.now() + n, items: [first, second], title: `إطلالة ${["ناعمة", "كاجوال", "مميزة"][n] ?? "جميلة"}` }];
+    });
+    setOutfits(generated);
+  };
   return <div className="page"><PageTitle title="دولابي اللطيف" subtitle="كل قطعك الجميلة في مكان واحد" emoji="👗" />
     <section className="closet-upload"><div><ImagePlus size={28} /><h2>أضيفي قطعة جديدة</h2><p>التقطي صورة بخلفية بسيطة</p></div><div className="category-row">{["بلوزات", "بناطيل", "حجابات", "حقائب", "أحذية"].map((cat) => <button className={category === cat ? "active" : ""} key={cat} onClick={() => setCategory(cat)}>{cat}</button>)}</div><button className="outline-button" onClick={() => fileRef.current?.click()}><Camera size={19} /> تصوير أو اختيار صورة</button><input ref={fileRef} hidden type="file" accept="image/*" capture="environment" onChange={(e) => addImage(e.target.files?.[0])} /></section>
     <div className="section-heading"><h2>قطع دولابي</h2><span>{closet.length} قطعة</span></div>
