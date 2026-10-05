@@ -153,8 +153,9 @@ function GlowUpApp() {
           <NavButton active={tab === "closet"} label="دولابي" icon={<Shirt />} prominent onClick={() => setTab("closet")} />
           <NavButton active={tab === "routine"} label="روتيني" icon={<Check />} onClick={() => setTab("routine")} />
           <NavButton active={tab === "workout"} label="رياضتي" icon={<Dumbbell />} onClick={() => setTab("workout")} />
-        </nav>
-        {toast && <div className="toast-message">{toast}</div>}
+          </nav>
+          <p className="made-by made-by-app">✨ من إبداع Soumeya Sallem 💗✨</p>
+          {toast && <div className="toast-message">{toast}</div>}
       </div>
     </main>
   );
@@ -178,6 +179,7 @@ function Onboarding({ onStart }: { onStart: () => void }) {
         </div>
         <button className="primary-button" onClick={onStart}>يلا نبدأ <Sparkles size={18} /></button>
       </section>
+      <p className="made-by">✨ صُنع بحب 💗 بواسطة Soumeya Sallem ✨</p>
     </main>
   );
 }
