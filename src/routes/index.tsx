@@ -211,7 +211,7 @@ function HomeScreen({ calories, completed, streak, stars, setTab }: { calories: 
 
 function FoodScreen({ calories, setCalories, showToast }: { calories: number; setCalories: (n: number) => void; showToast: (s: string) => void }) {
   const [query, setQuery] = useState("");
-  const [meals, setMeals] = useStoredState<{ name: string; kcal: number }[]>("glowup-meals", [{ name: "فطور خفيف", kcal: 340 }, { name: "رز بالدجاج", kcal: 520 }]);
+  const [meals, setMeals] = useStoredState<{ name: string; kcal: number; photo?: string }[]>("glowup-meals", [{ name: "فطور خفيف", kcal: 340 }, { name: "رز بالدجاج", kcal: 520 }]);
   const fileRef = useRef<HTMLInputElement>(null);
   const addFood = () => {
     const name = query.trim();
